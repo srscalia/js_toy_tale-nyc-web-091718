@@ -1,8 +1,33 @@
+//***********************************************************
+//********************* Variables ***************************
 const addBtn = document.querySelector('#new-toy-btn')
 const toyForm = document.querySelector('.container')
+const toysCollection = document.querySelector('#toy-collection')
 let addToy = false
+let toys = []
 
-// YOUR CODE HERE
+//***********************************************************
+//*****************Fetches to JSON***************************
+
+
+fetch('http://localhost:3000/toys')
+  .then(response => response.json())
+  .then((json) => {
+    toys = json;
+    toys.forEach((toy)=>{
+      toysCollection.innerHTML += `
+      <div data-id=${toy.id} class="card">
+        <h2>${toy.name}</h2>
+        <img src=${toy.image} class="toy-avatar" />
+        <p>${toy.likes} Likes </p>
+        <button class="like-btn">Like <3</button>
+        </div>
+      `
+    })
+  })
+
+//***********************************************************
+//*****************Event Listeners***************************
 
 addBtn.addEventListener('click', () => {
   // hide & seek with the form
@@ -15,5 +40,5 @@ addBtn.addEventListener('click', () => {
   }
 })
 
-
-// OR HERE!
+//***********************************************************
+//*****************Helper Functions**************************
